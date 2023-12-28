@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class MainManager : MonoBehaviour
 {
-    public static MainManager instance;
+    public static MainManager Instance { get; private set; }
     public Color teamColor;
     //questo script verrà eseguito se: lo script è abilitato e quando l'instanza a esso associta verrà caricata 
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
-            Destroy(instance);
+            Destroy(Instance);
             return;
         }
-        instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
         LoadColor();
     }

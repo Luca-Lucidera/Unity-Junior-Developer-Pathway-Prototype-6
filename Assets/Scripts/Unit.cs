@@ -13,22 +13,22 @@ public abstract class Unit : MonoBehaviour,
 {
     public float Speed = 3;
 
-    protected NavMeshAgent m_Agent;
-    protected Building m_Target;
+    protected NavMeshAgent agent;
+    protected Building target;
 
     protected void Awake()
     {
-        m_Agent = GetComponent<NavMeshAgent>();
-        m_Agent.speed = Speed;
-        m_Agent.acceleration = 999;
-        m_Agent.angularSpeed = 999;
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = Speed;
+        agent.acceleration = 999;
+        agent.angularSpeed = 999;
     }
 
     private void Start()
     {
-        if (MainManager.instance != null)
+        if (MainManager.Instance != null)
         {
-            SetColor(MainManager.instance.teamColor);
+            SetColor(MainManager.Instance.teamColor);
         }
     }
 
@@ -43,12 +43,12 @@ public abstract class Unit : MonoBehaviour,
 
     private void Update()
     {
-        if (m_Target != null)
+        if (target != null)
         {
-            float distance = Vector3.Distance(m_Target.transform.position, transform.position);
+            float distance = Vector3.Distance(target.transform.position, transform.position);
             if (distance < 2.0f)
             {
-                m_Agent.isStopped = true;
+                agent.isStopped = true;
                 BuildingInRange();
             }
         }
@@ -56,21 +56,21 @@ public abstract class Unit : MonoBehaviour,
 
     public virtual void GoTo(Building target)
     {
-        m_Target = target;
+        this.target = target;
 
-        if (m_Target != null)
+        if (this.target != null)
         {
-            m_Agent.SetDestination(m_Target.transform.position);
-            m_Agent.isStopped = false;
+            agent.SetDestination(this.target.transform.position);
+            agent.isStopped = false;
         }
     }
 
     public virtual void GoTo(Vector3 position)
     {
         //we don't have a target anymore if we order to go to a random point.
-        m_Target = null;
-        m_Agent.SetDestination(position);
-        m_Agent.isStopped = false;
+        target = null;
+        agent.SetDestination(position);
+        agent.isStopped = false;
     }
 
 

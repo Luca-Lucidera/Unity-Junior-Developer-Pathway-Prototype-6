@@ -21,11 +21,11 @@ public class TransporterUnit : Unit
     
     protected override void BuildingInRange()
     {
-        if (m_Target == Base.Instance)
+        if (target == Base.Instance)
         {
             //we arrive at the base, unload!
             if (m_Transporting.Count > 0)
-                m_Target.AddItem(m_Transporting.ResourceId, m_Transporting.Count);
+                target.AddItem(m_Transporting.ResourceId, m_Transporting.Count);
 
             //we go back to the building we came from
             GoTo(m_CurrentTransportTarget);
@@ -34,11 +34,11 @@ public class TransporterUnit : Unit
         }
         else
         {
-            if (m_Target.Inventory.Count > 0)
+            if (target.Inventory.Count > 0)
             {
-                m_Transporting.ResourceId = m_Target.Inventory[0].ResourceId;
-                m_Transporting.Count = m_Target.GetItem(m_Transporting.ResourceId, MaxAmountTransported);
-                m_CurrentTransportTarget = m_Target;
+                m_Transporting.ResourceId = target.Inventory[0].ResourceId;
+                m_Transporting.Count = target.GetItem(m_Transporting.ResourceId, MaxAmountTransported);
+                m_CurrentTransportTarget = target;
                 GoTo(Base.Instance);
             }
         }
